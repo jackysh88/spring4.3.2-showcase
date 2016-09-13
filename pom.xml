@@ -10,12 +10,18 @@
 
     <packaging>dom</packaging>
 
+    <properties>
+        <junit.version>4.12</junit.version>
+        <spring.version>4.3.2.RELEASE</spring.version>
+        <log4j.version>2.0.2</log4j.version>
+    </properties>
+
     <dependencies>
 
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>${junit.version}</version>
         </dependency>
     </dependencies>
 
