@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--实现不同级别日志输出到不同日志文件
+Log4j建议只使用四个级别，优先级从高到低分别是ERROR、WARN、INFO、DEBUG
+-->
+<configuration debug="off" monitorInterval="1800">
+    <Properties>
+        <Property name="log-path">C://logs//roll-log</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} %-5level %class{36}.%M()/%L  - %msg%xEx%n"/>
+        </Console>
+
+        <!-- 按天分日志文件 -->
+        <RollingFile name="app_debug_day" fileName="${log-path}/debug.log"
+                     filePattern="${log-path}/day-%d{yyyy-MM-dd}.log">
+            <PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%thread] %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy modulate="true" interval="1"/>
+            </Policies>
+        </RollingFile>
+
+        <!-- 按分钟分日志文件 -->
+        <RollingFile name="app_debug_min" fileName="${log-path}/minute.log"
+                     filePattern="${log-path}/minute-%d{yyyy-MM-dd-HH-mm}.log">
+            <PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%thread] %m%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true" />
+            </Policies>
+        </RollingFile>
+
+        <!-- 按大小分日志文件，设置同类型文件个数 -->
+        <RollingFile name="app_debug_size" fileName="${log-path}/size.log"
+                     filePattern="${log-path}/size-%d{yyyy-MM-dd}-%i.log.gz">
+            <PatternLayout pattern="%-d{yyyy-MM-dd HH:mm:ss} [%thread] %m%n"/>
+            <SizeBasedTriggeringPolicy size="20 B" />
+            <!--<SizeBasedTriggeringPolicy size="20 MB" />-->
+            <DefaultRolloverStrategy max="3"/>
+        </RollingFile>
+
+
+    </Appenders>
+
+    <Loggers>
+        <Logger name="com.github.jackysh88.spring.log4j2" level="trace" additivity="false">
+            <appender-ref ref="Console"/>
+            <appender-ref ref="app_debug_day"/>
+            <appender-ref ref="app_debug_min"/>
+            <appender-ref ref="app_debug_size"/>
+        </Logger>
+    </Loggers>
+</configuration>

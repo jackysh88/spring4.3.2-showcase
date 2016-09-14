@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        ">
+
+    <context:annotation-config/>
+    <context:component-scan base-package="spring.showcase.bean"/>
+
+    <bean id="helloWorld" class="spring.showcase.bean.HelloWorldBean">
+        <property name="name" value="Jacky"></property>
+    </bean>
+
+    <bean id="helloWorld2" class="spring.showcase.bean.HelloWorldBean">
+        <constructor-arg name="text" value="Tom"/>
+    </bean>
+
+
+
+    <bean id="foo" class="spring.showcase.bean.Foo"
+        p:name = "Jacky"
+    />
+
+    <bean id="bar" class="spring.showcase.bean.Bar"
+        p:name = "Tom"
+        p:foo = "#{foo}"
+    />
+
+
+</beans>
